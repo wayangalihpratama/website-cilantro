@@ -1,0 +1,6 @@
+.agent/
+agent_docs/
+node_modules/
+.DS_Store
+task.md
+spike_notes.md
