@@ -1,8 +1,8 @@
 # 🌮 Cilantro Ubud — Authentic Mexican Cocina & Agave Bar
 
-> Conversion-optimized, zero-build restaurant website for **Cilantro Ubud**, located on Jl. Sugriwa in the cultural heart of Ubud, Bali.
+> Conversion-optimized, zero-build restaurant website for **Cilantro Ubud**, located on Jln. Raya Nyuh Kuning in the cultural heart of Ubud, Bali.
 
-[![Test Suite](https://img.shields.io/badge/Tests-8%2F8%20Passing-emerald)](tests/landing.spec.js)
+[![Test Suite](https://img.shields.io/badge/Tests-10%2F10%20Passing-emerald)](tests/landing.spec.js)
 [![Rating](https://img.shields.io/badge/Google%20Reviews-4.8%20%E2%98%85%20(500%2B)-amber)](https://www.google.com/maps/place/Cilantro+Ubud/@-8.5275181,115.2601778,17z/data=!4m8!3m7!1s0x2dd23d9f8887ba51:0xe115c8808d6cf3e3!8m2!3d-8.5275181!4d115.2601778!9m1!1b1!16s%2Fg%2F11fzfdrz9d)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -11,11 +11,17 @@
 ## 🌟 Overview & Features
 
 - **Branded Experience**: Featuring Cilantro Ubud's iconic sombrero logo, warm Mexican Hacienda & Agave Cantina aesthetics.
-- **Interactive Menu Explorer**: Tabbed navigation across 4 categories (*Tacos & Burritos*, *Antojitos & Fajitas*, *Plant-Based Gastronomy*, *Margaritas & Drinks*) with realistic IDR pricing and dietary tags (`🌱 Vegan`, `🌶️ Spicy`, `⭐ Popular`, `🌾 Gluten-Free`).
-- **Dedicated Vegan Showcase**: Highlighting Ubud's favorite braised jackfruit carnitas, housemade cashew queso, and dairy-free crema.
+- **Interactive Menu Explorer**: Tabbed navigation across 5 culinary categories from the official menu PDF:
+  - 🍳 *Breakfast & Brunch* (Huevos Rancheros, Breakfast Burrito, Mexican Omelette, Avocado Toast, Pancakes & Waffles)
+  - 🌮 *Tacos & Mexican Mains* (LA Taco, Crispy/Soft Tacos, Wet Burrito, Sizzling Fajitas, Enchiladas, Chimichanga)
+  - 🥑 *Snacks, Burgers & Taquitos* (Jalapeño Poppers, Guac & Chips, Cowboys Burger, Taquitos, Crispy Wings)
+  - 🌱 *Plant-Based Vegan* (Jackfruit Carnitas Tacos, Crispy Tempe Tacos, Vegan Wet Burrito, Cashew Queso)
+  - 🍹 *Cocktails, Beers & Sweets* (Signature Margaritas, Michelada, Churros con Chocolate, Jarritos, Fresh Juices)
+- **Official 6-Page Visual Menu Gallery & Lightbox**: Interactive menu photo gallery (`menu_scans` tab) displaying all 6 high-resolution physical menu cards with zoom, full-screen lightbox modal, and next/prev page navigation.
+- **Dedicated Vegan Showcase**: Highlighting Ubud's favorite braised jackfruit carnitas, housemade cashew cheese, and dairy-free crema.
 - **Social Proof & Community**: 4.8★ Google Maps rating with verified diner quotes, and links to [Instagram (@cilantroubud)](https://www.instagram.com/cilantroubud/) and [Facebook (@cilantroubud8)](https://www.facebook.com/cilantroubud8/).
 - **VIP Table Reservation Modal**: Instant table booking popup generating pre-formatted WhatsApp reservation requests.
-- **Location & Hours**: Daily 11:00 AM – 11:00 PM on Jl. Sugriwa, Ubud with a responsive Google Maps embed and direct navigation links.
+- **Location & Hours**: Daily **8:00 AM – 11:00 PM** (breakfast served from 8:00 AM) on Jln. Raya Nyuh Kuning, Ubud with a responsive Google Maps embed and direct navigation links.
 
 ---
 
@@ -74,9 +80,10 @@ npx vercel --prod
 
 ## 📍 Restaurant Information
 
-- **Address**: Jl. Sugriwa, Ubud, Kecamatan Ubud, Kabupaten Gianyar, Bali 80571
-- **Opening Hours**: Monday – Sunday, 11:00 AM – 11:00 PM
-- **Direct Reservations**: [WhatsApp (+62 812-3456-7890)](https://wa.me/628123456789?text=Halo%20Cilantro%20Ubud%2C%20I%20would%20like%20to%20reserve%20a%20table)
+- **Address**: Jln. Raya Nyuh Kuning, Ubud, Kecamatan Ubud, Kabupaten Gianyar, Bali 80571
+- **Opening Hours**: Monday – Sunday, 8:00 AM – 11:00 PM (Breakfast served daily from 8:00 AM)
+- **WhatsApp Reservations**: [WhatsApp (+62 812-4651-6418)](https://wa.me/6281246516418?text=Halo%20Cilantro%20Ubud%2C%20I%20would%20like%20to%20reserve%20a%20table)
+- **Phone / Delivery**: (0361) 9083390
 - **Google Maps**: [Cilantro Ubud on Google Maps](https://www.google.com/maps/place/Cilantro+Ubud/@-8.5275181,115.2601778,17z/data=!4m7!3m6!1s0x2dd23d9f8887ba51:0xe115c8808d6cf3e3!8m2!3d-8.5275181!4d115.2601778!10e9!16s%2Fg%2F11fzfdrz9d)
 
 ---
