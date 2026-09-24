@@ -38,18 +38,23 @@
               crimson: '#B91C1C',
               habanero: '#EA580C',
               agave: '#10B981',
+              agaveLight: '#34D399',
               agaveDark: '#064E3B',
+              jungle: '#042F2E',
               obsidian: '#120F0D',
               charcoal: '#1A1613',
               warmDark: '#26201B',
               cardDark: '#221C17',
+              woodDark: '#1A1410',
               borderGold: 'rgba(245, 158, 11, 0.28)',
+              borderAgave: 'rgba(16, 185, 129, 0.28)',
             }
           },
           boxShadow: {
-            'gold-glow': '0 0 30px -5px rgba(245, 158, 11, 0.3)',
-            'terracotta-glow': '0 0 30px -5px rgba(217, 72, 38, 0.35)',
-            'agave-glow': '0 0 30px -5px rgba(16, 185, 129, 0.3)',
+            'gold-glow': '0 0 30px -5px rgba(245, 158, 11, 0.35)',
+            'terracotta-glow': '0 0 30px -5px rgba(217, 72, 38, 0.38)',
+            'agave-glow': '0 0 30px -5px rgba(16, 185, 129, 0.35)',
+            'bistro': '0 10px 30px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
           }
         }
       }
@@ -70,17 +75,33 @@
       height: 4px;
     }
 
-    .luxury-card {
-      background: linear-gradient(160deg, #241D17 0%, #1A1511 100%);
-      border: 1px solid rgba(245, 158, 11, 0.25);
+    .luxury-card, .bistro-card {
+      background: linear-gradient(165deg, #241D17 0%, #17120E 100%);
+      border: 1px solid rgba(245, 158, 11, 0.22);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.6);
     }
 
-    .luxury-card:hover {
-      border-color: rgba(245, 158, 11, 0.65);
+    .luxury-card:hover, .bistro-card:hover {
+      border-color: rgba(245, 158, 11, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .tropical-glow-agave {
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.05) 50%, transparent 70%);
+    }
+
+    .tropical-glow-sun {
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(217, 72, 38, 0.08) 50%, transparent 70%);
+    }
+
+    .wood-board-pattern {
+      background-color: #16120F;
+      background-image: radial-gradient(rgba(245, 158, 11, 0.04) 1px, transparent 0);
+      background-size: 24px 24px;
     }
   </style>
 </head>
-<body class="bg-hacienda-obsidian text-stone-100 antialiased font-sans flex flex-col min-h-screen selection:bg-hacienda-gold selection:text-hacienda-obsidian" 
+<body class="bg-hacienda-obsidian text-stone-100 antialiased font-sans flex flex-col min-h-screen selection:bg-hacienda-gold selection:text-hacienda-obsidian wood-board-pattern" 
       x-data="{ 
         mobileMenuOpen: false, 
         modalOpen: false, 
@@ -88,6 +109,7 @@
         activeMenuImg: 'assets/images/menu/menu-page-1.jpg',
         activeMenuPage: 1,
         activeMenuTitle: 'Breakfast & Morning Favorites',
+        dietaryFilter: 'all',
         menuTitles: [
           'Breakfast & Morning Favorites',
           'Tacos, Taquitos & Mexican Snacks',
@@ -117,6 +139,18 @@
             menuEl.scrollIntoView({ behavior: 'smooth' });
           }
         },
+        setDietaryFilter(filter) {
+          this.dietaryFilter = filter;
+          if (filter === 'breakfast') {
+            this.activeCategory = 'breakfast';
+          } else if (filter === 'vegan') {
+            this.activeCategory = 'vegan';
+          }
+          const menuEl = document.getElementById('menu');
+          if (menuEl) {
+            menuEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        },
         activeCategory: 'tacos_mains',
         activeFaq: null,
         guestCount: '2 Guests',
@@ -132,6 +166,8 @@
         const handleHash = () => {
           if (window.location.hash === '#breakfast') {
             scrollToCategory('breakfast');
+          } else if (window.location.hash === '#vegan') {
+            scrollToCategory('vegan');
           }
         };
         handleHash();
@@ -231,12 +267,20 @@
 
   <main class="flex-grow">
     
-    <!-- Hero Section -->
+    <!-- Hero Section: Bali-Mexican Tropical Oasis -->
     <section class="relative overflow-hidden bg-gradient-to-b from-hacienda-obsidian via-hacienda-charcoal to-hacienda-obsidian py-16 sm:py-24 lg:py-28 border-b border-hacienda-borderGold">
       
-      <!-- Ambient Glows -->
-      <div class="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-hacienda-gold/10 blur-[120px] pointer-events-none"></div>
-      <div class="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-hacienda-terracotta/15 blur-[120px] pointer-events-none"></div>
+      <!-- Ambient Tropical Cantina Glows & Jungle Backdrops -->
+      <div class="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-hacienda-gold/15 blur-[120px] pointer-events-none"></div>
+      <div class="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-hacienda-agave/15 blur-[120px] pointer-events-none"></div>
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-hacienda-terracotta/10 blur-[140px] pointer-events-none"></div>
+
+      <!-- Subtle Botanical Silhouettes in Background -->
+      <div class="absolute -right-12 -top-12 text-emerald-500/[0.04] pointer-events-none select-none">
+        <svg class="w-96 h-96" viewBox="0 0 100 100" fill="currentColor">
+          <path d="M50 0 C60 30 80 40 100 50 C80 60 60 70 50 100 C40 70 20 60 0 50 C20 40 40 30 50 0 Z"/>
+        </svg>
+      </div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
@@ -245,23 +289,23 @@
           <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
             
             <!-- Eyebrow Badge -->
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-hacienda-warmDark border border-hacienda-gold/40 text-hacienda-gold text-xs sm:text-sm font-bold tracking-wider uppercase shadow-gold-glow">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-hacienda-warmDark/90 border border-hacienda-gold/40 text-hacienda-gold text-xs sm:text-sm font-bold tracking-wider uppercase shadow-gold-glow backdrop-blur">
               <span class="text-sm">🇲🇽</span>
-              <span>Breakfast, Tacos & Agave Bar • Nyuh Kuning, Ubud</span>
+              <span>Bali-Mexican Tropical Oasis • Nyuh Kuning, Ubud</span>
               <span class="text-xs">✦</span>
             </div>
 
             <!-- Grand Headline -->
             <h1 class="font-display font-black text-4xl sm:text-6xl lg:text-6xl text-white tracking-tight leading-[1.1]">
-              Vibrant Mexican Flavors, <br>
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-hacienda-gold via-amber-300 to-hacienda-terracotta">
-                From 8 AM Breakfast to Late Night Margaritas.
+              Vibrant Mexican Soul, <br>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-hacienda-gold via-amber-300 to-hacienda-agaveLight">
+                From 8 AM Breakfast to Agave Cantina.
               </span>
             </h1>
 
             <!-- Subtitle -->
             <p class="text-stone-200 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-              Start your morning with Huevos Rancheros and Breakfast Burritos, enjoy artisanal tacos & wet burritos for lunch, and savor sizzling fajitas with handcrafted margaritas under the Ubud stars.
+              Step into an open-air tropical courtyard in Nyuh Kuning. Savor authentic Huevos Rancheros at sunrise, artisanal hand-pressed tacos for lunch, and sizzling fajitas with fresh lime margaritas under the Ubud stars.
             </p>
 
             <!-- CTA Button Group -->
@@ -273,9 +317,9 @@
               </button>
 
               <a href="#menu" 
-                 class="w-full sm:w-auto px-8 py-4 rounded-full bg-hacienda-warmDark border border-hacienda-gold/40 text-hacienda-gold font-display font-bold text-sm tracking-wider uppercase hover:bg-hacienda-gold hover:text-hacienda-obsidian hover:shadow-gold-glow transition-all duration-200 flex items-center justify-center gap-2.5">
+                 class="w-full sm:w-auto px-8 py-4 rounded-full bg-hacienda-warmDark/90 border border-hacienda-gold/40 text-hacienda-gold font-display font-bold text-sm tracking-wider uppercase hover:bg-hacienda-gold hover:text-hacienda-obsidian hover:shadow-gold-glow transition-all duration-200 flex items-center justify-center gap-2.5 backdrop-blur">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 2-4 4-4-4"/><path d="M12 6v14"/><path d="M8 10h8"/></svg>
-                <span>Explore Full Menu</span>
+                <span>Explore Bistro Menu</span>
               </a>
             </div>
 
@@ -293,7 +337,7 @@
                   <svg class="w-4 h-4 fill-amber-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <span class="text-white font-extrabold">4.8 / 5.0</span>
-                <span class="text-stone-400 font-normal">(500+ Google Reviews)</span>
+                <span class="text-stone-400 font-normal">(500+ Verified Diners)</span>
               </a>
               <span class="hidden sm:inline text-hacienda-gold/40">•</span>
               <span class="flex items-center gap-1.5 font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-full text-xs">
@@ -303,52 +347,61 @@
 
           </div>
 
-          <!-- Hero Spotlight Card -->
+          <!-- Hero Spotlight Bistro Board Card -->
           <div class="lg:col-span-5 relative">
-            <div class="relative mx-auto max-w-md luxury-card rounded-3xl p-7 sm:p-9 text-white shadow-2xl overflow-hidden">
+            <div class="relative mx-auto max-w-md bistro-card rounded-3xl p-7 sm:p-9 text-white shadow-2xl overflow-hidden border border-hacienda-gold/30">
               
               <!-- Top Status -->
               <div class="flex items-center justify-between pb-5 border-b border-hacienda-gold/20">
                 <div class="flex items-center gap-2.5">
                   <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_#34d399]"></span>
-                  <span class="text-xs font-bold text-stone-200 uppercase tracking-wider">Now Open in Ubud</span>
+                  <span class="text-xs font-bold text-stone-200 uppercase tracking-wider">Open Daily in Ubud</span>
                 </div>
-                <span class="text-xs bg-hacienda-terracotta border border-amber-300/30 px-3 py-1 rounded-full font-bold text-white tracking-wide">Daily 8 AM - 11 PM</span>
+                <span class="text-xs bg-hacienda-terracotta border border-amber-300/30 px-3 py-1 rounded-full font-bold text-white tracking-wide shadow-sm">8:00 AM – 11:00 PM</span>
               </div>
 
               <!-- Brand Header in Card -->
               <div class="py-5 text-center space-y-2">
                 <div class="w-24 h-24 mx-auto p-2 rounded-2xl bg-white shadow-gold-glow flex items-center justify-center">
-                  <img src="assets/images/cilantro-logo.jpg" alt="Cilantro Ubud" class="w-full h-full object-contain">
+                  <img src="assets/images/cilantro-logo.jpg" alt="Cilantro Ubud Sombrero Logo" class="w-full h-full object-contain">
                 </div>
                 <h3 class="font-display font-black text-2xl text-hacienda-gold tracking-wide">Cilantro Ubud</h3>
                 <p class="text-stone-300 text-xs font-medium">Jln. Raya Nyuh Kuning, Ubud • Bali</p>
-                <p class="text-amber-300/90 text-xs font-semibold">Delivery: (0361) 9083390</p>
+                <p class="text-amber-300/90 text-xs font-semibold">Delivery Line: (0361) 9083390</p>
               </div>
 
               <!-- Highlights in Card -->
               <div class="space-y-3 pt-1">
-                <div class="flex items-center gap-3.5 bg-hacienda-warmDark p-3.5 rounded-2xl border border-amber-500/30">
-                  <span class="text-2xl shrink-0">🍳</span>
+                <div @click="scrollToCategory('breakfast')" class="flex items-center gap-3.5 bg-hacienda-warmDark/90 p-3.5 rounded-2xl border border-amber-500/30 hover:border-amber-400 transition cursor-pointer group">
+                  <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">🍳</span>
                   <div class="text-xs">
-                    <p class="font-bold text-amber-300 text-sm">Breakfast from 8:00 AM</p>
+                    <p class="font-bold text-amber-300 text-sm flex items-center justify-between">
+                      <span>Breakfast from 8:00 AM</span>
+                      <span class="text-[10px] text-amber-400/80">View ↗</span>
+                    </p>
                     <p class="text-stone-300 text-xs mt-0.5">Huevos Rancheros, Pancakes, Breakfast Burritos</p>
                   </div>
                 </div>
 
-                <div class="flex items-center gap-3.5 bg-hacienda-warmDark p-3.5 rounded-2xl border border-hacienda-borderGold">
-                  <span class="text-2xl shrink-0">🌮</span>
+                <div @click="scrollToCategory('tacos_mains')" class="flex items-center gap-3.5 bg-hacienda-warmDark/90 p-3.5 rounded-2xl border border-hacienda-borderGold hover:border-hacienda-gold transition cursor-pointer group">
+                  <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">🌮</span>
                   <div class="text-xs">
-                    <p class="font-bold text-white text-sm">Tacos, Burritos & Poppers</p>
-                    <p class="text-stone-300 text-xs mt-0.5">LA Taco, Wet Burrito, Jalapeño Poppers 48k</p>
+                    <p class="font-bold text-white text-sm flex items-center justify-between">
+                      <span>Artisanal Tacos & Wet Burritos</span>
+                      <span class="text-[10px] text-hacienda-gold">View ↗</span>
+                    </p>
+                    <p class="text-stone-300 text-xs mt-0.5">LA Taco, Wet Burrito, Sizzling Fajitas, Poppers</p>
                   </div>
                 </div>
 
-                <div class="flex items-center gap-3.5 bg-hacienda-warmDark p-3.5 rounded-2xl border border-emerald-500/30">
-                  <span class="text-2xl shrink-0">🌱</span>
+                <div @click="scrollToCategory('vegan')" class="flex items-center gap-3.5 bg-hacienda-warmDark/90 p-3.5 rounded-2xl border border-emerald-500/30 hover:border-emerald-400 transition cursor-pointer group">
+                  <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">🌱</span>
                   <div class="text-xs">
-                    <p class="font-bold text-emerald-300 text-sm">Vegan Jackfruit & Cashew Cheese</p>
-                    <p class="text-stone-300 text-xs mt-0.5">Substitute dairy to cashew cheese on all mains</p>
+                    <p class="font-bold text-emerald-300 text-sm flex items-center justify-between">
+                      <span>Plant-Based & Cashew Cheese</span>
+                      <span class="text-[10px] text-emerald-400">View ↗</span>
+                    </p>
+                    <p class="text-stone-300 text-xs mt-0.5">Young jackfruit carnitas & vegan substitutions</p>
                   </div>
                 </div>
               </div>
@@ -374,7 +427,7 @@
     </section>
 
     <!-- Highlights Banner -->
-    <section class="bg-hacienda-charcoal text-white py-10 border-y border-hacienda-borderGold">
+    <section class="bg-hacienda-charcoal/90 backdrop-blur text-white py-10 border-y border-hacienda-borderGold">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div class="p-2">
@@ -406,7 +459,7 @@
       <div id="breakfast" class="absolute -top-24"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        <div class="text-center max-w-3xl mx-auto mb-10 space-y-4">
           <div class="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-hacienda-warmDark border border-hacienda-borderGold text-hacienda-gold text-xs font-bold uppercase tracking-wider">
             <span>Official Cilantro Ubud Menu</span>
           </div>
@@ -416,6 +469,41 @@
           <p class="text-stone-300 text-base sm:text-lg font-normal">
             Every dish is prepared fresh with genuine Mexican recipes, stone-ground corn tortillas, and custom options for all dietary needs.
           </p>
+
+          <!-- Interactive Dietary Filter Chips Bar -->
+          <div class="flex flex-wrap items-center justify-center gap-2 pt-2 pb-1">
+            <span class="text-xs font-bold text-hacienda-gold tracking-wider uppercase mr-1">Filter Dietary:</span>
+            <button @click="setDietaryFilter('all')" 
+                    type="button" 
+                    :class="dietaryFilter === 'all' ? 'bg-amber-500 text-black font-extrabold shadow-md scale-105' : 'bg-stone-900/90 text-stone-300 border border-stone-700 hover:border-amber-400'" 
+                    class="px-3.5 py-1.5 rounded-full text-xs transition duration-150">
+              All Dishes
+            </button>
+            <button @click="setDietaryFilter('vegan')" 
+                    type="button" 
+                    :class="dietaryFilter === 'vegan' ? 'bg-emerald-500 text-black font-extrabold shadow-md scale-105' : 'bg-emerald-950/70 text-emerald-300 border border-emerald-700/50 hover:border-emerald-400'" 
+                    class="px-3.5 py-1.5 rounded-full text-xs transition duration-150 flex items-center gap-1">
+              <span>🌱 100% Plant-Based</span>
+            </button>
+            <button @click="setDietaryFilter('breakfast')" 
+                    type="button" 
+                    :class="dietaryFilter === 'breakfast' ? 'bg-amber-500 text-black font-extrabold shadow-md scale-105' : 'bg-amber-950/70 text-amber-300 border border-amber-700/50 hover:border-amber-400'" 
+                    class="px-3.5 py-1.5 rounded-full text-xs transition duration-150 flex items-center gap-1">
+              <span>🍳 Breakfast (8-11:30 AM)</span>
+            </button>
+            <button @click="setDietaryFilter('spicy')" 
+                    type="button" 
+                    :class="dietaryFilter === 'spicy' ? 'bg-red-600 text-white font-extrabold shadow-md scale-105' : 'bg-red-950/70 text-red-300 border border-red-700/50 hover:border-red-400'" 
+                    class="px-3.5 py-1.5 rounded-full text-xs transition duration-150 flex items-center gap-1">
+              <span>🌶️ Spicy Favorites</span>
+            </button>
+            <button @click="setDietaryFilter('gf')" 
+                    type="button" 
+                    :class="dietaryFilter === 'gf' ? 'bg-yellow-500 text-black font-extrabold shadow-md scale-105' : 'bg-yellow-950/70 text-yellow-300 border border-yellow-700/50 hover:border-yellow-400'" 
+                    class="px-3.5 py-1.5 rounded-full text-xs transition duration-150 flex items-center gap-1">
+              <span>🌾 Gluten-Free Friendly</span>
+            </button>
+          </div>
 
           <!-- Category Navigation Tabs -->
           <div class="flex flex-wrap items-center justify-center gap-2.5 pt-4">
@@ -483,166 +571,229 @@
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Mexican Street Tacos -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'gf' ? 'ring-2 ring-yellow-400/60 bg-yellow-950/20' : ''">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Mexican Street Tacos</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">From 32k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌮</span>
+                  <h3 class="font-display font-bold text-lg text-white">Mexican Street Tacos</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">From 32k</span>
               </div>
-              <div class="flex gap-2 mb-3">
+              <div class="flex flex-wrap gap-1.5 mb-3">
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">⭐ 6" Soft Corn / Flour / Crispy</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-yellow-300 border border-yellow-700/40">🌾 GF Corn Option</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
-                Served Mexican street style with slaw, pico de gallo, jalapeño crema, and salsa.
+                Served Mexican street style with shredded slaw, fresh pico de gallo, jalapeño crema, and homemade salsa.
               </p>
               <div class="mt-3 flex flex-wrap gap-1.5 text-xs text-stone-300">
-                <span class="bg-stone-800 px-2 py-1 rounded">Chicken 32k</span>
-                <span class="bg-stone-800 px-2 py-1 rounded">Fish (Dorry) 32k</span>
-                <span class="bg-stone-800 px-2 py-1 rounded">Pork 35k</span>
-                <span class="bg-stone-800 px-2 py-1 rounded">Beef 39k</span>
-                <span class="bg-stone-800 px-2 py-1 rounded">Shrimp 42k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Chicken 32k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Fish (Dorry) 32k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Pork 35k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Beef 39k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Shrimp 42k</span>
               </div>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
-              <span>Substitute with Cassava Tortillas (GF) +3k</span>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Cassava Tortillas (GF) +3k</span>
+              <span class="text-amber-400/80 font-medium">Authentic Street Style</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- LA Taco -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">LA Taco (1 pcs)</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">42k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌴</span>
+                  <h3 class="font-display font-bold text-lg text-white">LA Taco (1 pcs)</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">42k</span>
               </div>
-              <div class="flex gap-2 mb-3">
+              <div class="flex flex-wrap gap-1.5 mb-3">
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">⭐ Chef Specialty</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-yellow-300 border border-yellow-700/40">🌾 Corn Tortilla</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
                 Homemade corn tortilla with melted cheese, carnitas pork, baby potato, pico de gallo, fresh guacamole, and salsa.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
               <span>Signature California-Mexican fusion</span>
+              <span class="text-amber-400/80 font-medium">House Favorite</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Wet Burrito -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'spicy' ? 'ring-2 ring-red-400/70 bg-red-950/20' : ''">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Wet Burrito</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">82k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌯</span>
+                  <h3 class="font-display font-bold text-lg text-white">Wet Burrito</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">82k</span>
               </div>
-              <div class="flex gap-2 mb-3">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-950 border border-red-500/40 text-red-300">🌶️ Smothered in C's Sauce</span>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-950/80 border border-red-500/50 text-red-300">🌶️ Smothered in C's Sauce</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-amber-300 border border-amber-700/40">🔥 Ubud Legend</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
                 10" flour tortilla with house rice, mozzarella cheese, refried beans, pico de gallo, shredded lettuce, sour cream, filling, C's sauce, jalapeño crema, and homemade chips.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
-              <span>Choose Chicken, Pork (+17k), Beef (+25k), or Jackfruit (+5k)</span>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Chicken / Pork (+17k) / Beef (+25k) / Jackfruit (+5k)</span>
+              <span class="text-red-400/80 font-medium">Extra Saucy</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Regular Burrito -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Regular Burrito</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">79k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌯</span>
+                  <h3 class="font-display font-bold text-lg text-white">Regular Burrito</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">79k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">⭐ 10" Giant Wrap</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
                 10" flour tortilla packed with house rice, mozzarella, refried beans, pico de gallo, shredded lettuce, sour cream, filling, C's sauce, and jalapeño crema.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
               <span>Served with homemade corn chips</span>
+              <span class="text-amber-400/80 font-medium">Classic Style</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Sizzling Fajitas -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Sizzling Fajitas</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">72k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍳</span>
+                  <h3 class="font-display font-bold text-lg text-white">Sizzling Fajitas</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">72k</span>
               </div>
-              <div class="flex gap-2 mb-3">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🔥 Sizzling Platter</span>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🔥 Sizzling Hot Platter</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-600/40">🌱 Cashew Swap Available</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
-                Your choice of filling with sautéed onion and green peppers, house rice, refried beans, 3 pcs corn or flour tortillas, salsa, and guacamole.
+                Your choice of filling with sautéed onion and green peppers, house rice, refried beans, 3 pcs corn or flour tortillas, salsa, and fresh guacamole.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
-              <span>Substitute dairy to cashew cheese for vegan</span>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Includes 3 tortillas + guac & salsa</span>
+              <span class="text-amber-400/80 font-medium">Table Sizzler</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Enchiladas -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'gf' ? 'ring-2 ring-yellow-400/60 bg-yellow-950/20' : ''">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Enchiladas (GF)</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">79k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🧀</span>
+                  <h3 class="font-display font-bold text-lg text-white">Enchiladas (GF)</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">79k</span>
               </div>
-              <div class="flex gap-2 mb-3">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 border border-emerald-500/40 text-emerald-300">🌾 Gluten-Free</span>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-950/80 border border-yellow-600/50 text-yellow-300">🌾 100% Gluten-Free</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-amber-300 border border-amber-700/40">Baked Corn Tortillas</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
                 House rice, refried beans, 6" corn tortillas with sautéed onion, green peppers, filling, C's sauce, sour cream, and melted mozzarella cheese.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
               <span>Rich baked Mexican classic</span>
+              <span class="text-yellow-400/80 font-medium">Naturally GF</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Quesadillas -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Quesadillas</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">78k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🫓</span>
+                  <h3 class="font-display font-bold text-lg text-white">Quesadillas</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">78k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🧀 Golden Toasted</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
-                6" flour tortillas with mozzarella cheese, sautéed onion, green peppers, filling, pico de gallo, sour cream, and salsa.
+                6" flour tortillas toasted with mozzarella cheese, sautéed onion, green peppers, filling, pico de gallo, sour cream, and homemade salsa.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
-              <span>Served with fresh pico de gallo & salsa</span>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Served with pico de gallo & salsa</span>
+              <span class="text-amber-400/80 font-medium">Melted Goodness</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Burrito Bowl -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'gf' ? 'ring-2 ring-yellow-400/60 bg-yellow-950/20' : ''">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Burrito Bowl (GF)</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">79k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥗</span>
+                  <h3 class="font-display font-bold text-lg text-white">Burrito Bowl (GF)</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">79k</span>
               </div>
-              <div class="flex gap-2 mb-3">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 border border-emerald-500/40 text-emerald-300">🌾 Gluten-Free</span>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-950/80 border border-yellow-600/50 text-yellow-300">🌾 100% Gluten-Free</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-600/40">🥑 Fresh Guac Included</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
-                House rice, mozzarella cheese, refried beans, pico de gallo, shredded lettuce, sour cream, filling, C's sauce, guacamole, and homemade corn chips.
+                House rice, mozzarella cheese, refried beans, pico de gallo, shredded lettuce, sour cream, filling, C's sauce, fresh guacamole, and homemade corn chips.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
-              <span>Healthy & balanced bowl</span>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Balanced & nourishing fiesta bowl</span>
+              <span class="text-emerald-400/80 font-medium">Healthy Choice</span>
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl transition-shadow flex flex-col justify-between">
+          <!-- Macho Nachos -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'gf' ? 'ring-2 ring-yellow-400/60 bg-yellow-950/20' : ''">
             <div>
-              <div class="flex items-start justify-between gap-4 mb-2">
-                <h3 class="font-display font-bold text-lg text-white">Macho Nachos (GF)</h3>
-                <span class="font-display font-black text-hacienda-gold text-base shrink-0">79k</span>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌽</span>
+                  <h3 class="font-display font-bold text-lg text-white">Macho Nachos (GF)</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">79k</span>
               </div>
-              <div class="flex gap-2 mb-3">
+              <div class="flex flex-wrap gap-1.5 mb-3">
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">⭐ Great for Sharing</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-yellow-950 text-yellow-300 border border-yellow-700/40">🌾 Corn Chips GF</span>
               </div>
               <p class="text-stone-300 text-sm leading-relaxed">
-                Homemade corn chips baked with mozzarella, refried beans, pico de gallo, filling, sour cream, guacamole, and salsa.
+                Homemade crispy corn chips baked with mozzarella, refried beans, pico de gallo, filling, sour cream, guacamole, and salsa.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-hacienda-borderGold text-xs text-stone-400">
-              <span>Generous share portion</span>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Generous share portion for table</span>
+              <span class="text-amber-400/80 font-medium">Party Favorite</span>
             </div>
           </div>
 
@@ -667,66 +818,149 @@
             </button>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-amber-500/30">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Huevos Rancheros</h3>
-              <span class="font-display font-black text-amber-300 text-base shrink-0">42k</span>
+          <!-- Huevos Rancheros -->
+          <div class="bistro-card p-6 rounded-3xl border-amber-500/30 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'breakfast' ? 'ring-2 ring-amber-400/80 bg-amber-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍳</span>
+                  <h3 class="font-display font-bold text-lg text-white">Huevos Rancheros</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">42k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🍳 Authentic Mexican Breakfast</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-yellow-300 border border-yellow-700/40">🌾 Corn Tortillas GF</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Crispy corn tortillas topped with refried beans, fried eggs, and pico de gallo, served with authentic rancheros sauce.
+              </p>
             </div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 mb-3">🍳 Authentic Mexican Breakfast</span>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Crispy corn tortillas topped with refried beans, fried eggs, and pico de gallo, served with authentic rancheros sauce.
-            </p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Served 8:00 AM – 11:30 AM Daily</span>
+              <span class="text-amber-400/80 font-medium">Ubud Morning Classic</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-amber-500/30">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Breakfast Burritos</h3>
-              <span class="font-display font-black text-amber-300 text-base shrink-0">60k</span>
+          <!-- Breakfast Burritos -->
+          <div class="bistro-card p-6 rounded-3xl border-amber-500/30 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'breakfast' ? 'ring-2 ring-amber-400/80 bg-amber-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌯</span>
+                  <h3 class="font-display font-bold text-lg text-white">Breakfast Burritos</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">60k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🌯 Hearty Morning Wrap</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Scrambled eggs, refried beans, crispy fries, mozzarella cheese, C's sauce, lettuce, pico de gallo, served with fresh salsa.
+              </p>
             </div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 mb-3">🌯 Morning Favorite</span>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Scrambled eggs, refried beans, crispy fries, mozzarella cheese, C's sauce, lettuce, pico de gallo, served with fresh salsa.
-            </p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Includes crispy seasoned fries</span>
+              <span class="text-amber-400/80 font-medium">Bestseller</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-amber-500/30">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Breakfast Tacos</h3>
-              <span class="font-display font-black text-amber-300 text-base shrink-0">50k</span>
+          <!-- Breakfast Tacos -->
+          <div class="bistro-card p-6 rounded-3xl border-amber-500/30 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'breakfast' ? 'ring-2 ring-amber-400/80 bg-amber-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌮</span>
+                  <h3 class="font-display font-bold text-lg text-white">Breakfast Tacos</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">50k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🥑 Fresh Avocado</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                6" flour tortillas with scrambled eggs, refried beans, pico de gallo, shredded vegetables, and diced avocado served with salsa.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              6" flour tortillas with scrambled eggs, refried beans, pico de gallo, shredded vegetables, and diced avocado served with salsa.
-            </p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Soft & savory morning start</span>
+              <span class="text-amber-400/80 font-medium">Light & Fresh</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-amber-500/30">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Avocado Toast</h3>
-              <span class="font-display font-black text-amber-300 text-base shrink-0">55k</span>
+          <!-- Avocado Toast -->
+          <div class="bistro-card p-6 rounded-3xl border-amber-500/30 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'breakfast' ? 'ring-2 ring-amber-400/80 bg-amber-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥑</span>
+                  <h3 class="font-display font-bold text-lg text-white">Avocado Toast</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">55k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 border border-emerald-500/40 text-emerald-300">🥑 Ubud Organic Guac</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Toasted artisan bread topped with fresh guacamole and eggs (fried or scrambled), served with a crisp garden salad.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Toasted bread topped with fresh guacamole and eggs (fried or scrambled), served with a crisp garden salad.
-            </p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Choose Fried or Scrambled Eggs</span>
+              <span class="text-emerald-400/80 font-medium">Cafe Favorite</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-amber-500/30">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">B.E.A.T Breakfast</h3>
-              <span class="font-display font-black text-amber-300 text-base shrink-0">62k</span>
+          <!-- B.E.A.T Breakfast -->
+          <div class="bistro-card p-6 rounded-3xl border-amber-500/30 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'breakfast' ? 'ring-2 ring-amber-400/80 bg-amber-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥓</span>
+                  <h3 class="font-display font-bold text-lg text-white">B.E.A.T Breakfast</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">62k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🍔 Brioche Bun</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Bacon, Eggs (scrambled or fried), Avocado, and Tomato on a toasted brioche bun served with fresh salad.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Bacon, Eggs (scrambled or fried), Avocado, and Tomato on a toasted brioche bun served with fresh salad.
-            </p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Bacon • Egg • Avocado • Tomato</span>
+              <span class="text-amber-400/80 font-medium">Full Fuel</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-amber-500/30">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Banana Pancakes / Waffles</h3>
-              <span class="font-display font-black text-amber-300 text-base shrink-0">48k</span>
+          <!-- Banana Pancakes / Waffles -->
+          <div class="bistro-card p-6 rounded-3xl border-amber-500/30 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'breakfast' ? 'ring-2 ring-amber-400/80 bg-amber-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥞</span>
+                  <h3 class="font-display font-bold text-lg text-white">Banana Pancakes / Waffles</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">48k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🍨 Served with Ice Cream</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Fluffy banana pancakes or golden waffles served with caramelized pineapple, vanilla ice cream, and rich caramel sauce.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Fluffy banana pancakes or golden waffles served with caramelized pineapple, vanilla ice cream, and rich caramel sauce.
-            </p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Sweet tropical brunch treat</span>
+              <span class="text-amber-400/80 font-medium">Sweet Tooth</span>
+            </div>
           </div>
 
         </div>
@@ -755,78 +989,223 @@
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Jalapeño Poppers</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">48k</span>
+          <!-- Jalapeño Poppers -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'spicy' ? 'ring-2 ring-red-400/80 bg-red-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌶️</span>
+                  <h3 class="font-display font-bold text-lg text-white">Jalapeño Poppers</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">48k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-950/80 border border-red-500/50 text-red-300">🌶️ Famous 4.9★ in Ubud</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-amber-300 border border-amber-700/40">🧀 Seasoned Melted Cheese</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Crispy golden-crumbed whole jalapeños stuffed with rich seasoned cheese, served with house spicy mayo dipping sauce.
+              </p>
             </div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-950 border border-red-500/40 text-red-300 mb-2">🌶️ Famous 4.9★ in Ubud</span>
-            <p class="text-stone-300 text-sm">Crisp crumbed jalapeños with seasoned cheese, served with spicy mayo.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Ubud's most loved appetizer</span>
+              <span class="text-red-400/80 font-medium">Must Try</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Guacamole & Chips</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">39k</span>
+          <!-- Guacamole & Chips -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'gf' || dietaryFilter === 'vegan' ? 'ring-2 ring-emerald-400/80 bg-emerald-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥑</span>
+                  <h3 class="font-display font-bold text-lg text-white">Guacamole & Chips</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">39k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">🌱 100% Plant-Based</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-yellow-300 border border-yellow-700/40">🌾 Corn Chips GF</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Freshly hand-crushed ripe Balinese avocado with fresh lime, chopped cilantro, onion, and warm homemade corn tortilla chips.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Freshly crushed avocado with lime, cilantro, and warm homemade corn chips.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Made fresh to order daily</span>
+              <span class="text-emerald-400/80 font-medium">Fresh & Clean</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Loaded Wedges Fries</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">54k</span>
+          <!-- Loaded Wedges Fries -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍟</span>
+                  <h3 class="font-display font-bold text-lg text-white">Loaded Wedges Fries</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">54k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">⭐ Table Snack</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Crispy seasoned potato wedges loaded with tender seasoned chicken, melted cheese, jalapeño crema, and signature dipping sauce.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Crispy seasoned wedges loaded with tender seasoned chicken and sauce.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Great with cold cervezas</span>
+              <span class="text-amber-400/80 font-medium">Crispy Goodness</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Taquitos (1 pcs)</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">From 26k</span>
+          <!-- Taquitos -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌮</span>
+                  <h3 class="font-display font-bold text-lg text-white">Taquitos (1 pcs)</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">From 26k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🌯 Rolled & Crispy</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                6" rolled flour tortilla stuffed with cheese and filling, topped with shredded lettuce, pico de gallo, and jalapeño cream.
+              </p>
+              <div class="mt-3 flex flex-wrap gap-1.5 text-xs text-stone-300">
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Jackfruit 26k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Chicken 28k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Fish 30k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Pork 34k</span>
+                <span class="bg-stone-800/90 px-2 py-1 rounded border border-stone-700/50">Beef 37k</span>
+              </div>
             </div>
-            <p class="text-stone-300 text-sm">6" flour tortilla with cheese, filling, shredded lettuce, pico de gallo, and jalapeño cream.</p>
-            <div class="mt-2 text-xs text-stone-400">Jackfruit 26k | Chicken 28k | Fish 30k | Pork 34k | Beef 37k</div>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Crunchy Mexican rolls</span>
+              <span class="text-amber-400/80 font-medium">Quick Bites</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Cowboys Burger</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">79k</span>
+          <!-- Cowboys Burger -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'spicy' ? 'ring-2 ring-red-400/80 bg-red-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍔</span>
+                  <h3 class="font-display font-bold text-lg text-white">Cowboys Burger</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">79k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-950/80 border border-red-500/50 text-red-300">🌶️ Jalapeño Popper Topping</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Grass-fed beef patty, cheese, pickled onion, romaine, honey mustard, brioche bun, topped with jalapeño poppers, potato wedges, and spicy mayo.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Grass-fed beef patty, cheese, pickled onion, romaine, honey mustard, brioche bun, jalapeño poppers, wedges, and spicy mayo.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Includes potato wedges & poppers</span>
+              <span class="text-red-400/80 font-medium">Chef Signature</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Cilantro Burger</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">74k</span>
+          <!-- Cilantro Burger -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍔</span>
+                  <h3 class="font-display font-bold text-lg text-white">Cilantro Burger</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">74k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">⭐ Grass-Fed Beef</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Grass-fed beef patty, melted cheese, caramelized onion, fresh tomatoes, crisp lettuce, spicy mayo, toasted brioche bun, and crusted baby potatoes.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Grass-fed beef patty, cheese, onion, tomatoes, lettuce, spicy mayo, brioche bun, and crusted baby potatoes.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Served with crusted baby potatoes</span>
+              <span class="text-amber-400/80 font-medium">House Burger</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Taco Salad</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">62k</span>
+          <!-- Taco Salad -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥗</span>
+                  <h3 class="font-display font-bold text-lg text-white">Taco Salad</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">62k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">🥑 Edible Tortilla Bowl</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Crisp romaine lettuce, black beans, sweet corn, pico de gallo, diced avocado, Parmesan cheese, and shredded carrot served in a crisp tortilla bowl with zesty lime vinaigrette.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Romaine, beans, corn, pico de gallo, avocado, Parmesan, shredded carrot in a crisp tortilla bowl with lime vinaigrette.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Light, crunchy & nutritious</span>
+              <span class="text-emerald-400/80 font-medium">Ubud Garden Fresh</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Tomato Soup</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">48k</span>
+          <!-- Tomato Soup -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍲</span>
+                  <h3 class="font-display font-bold text-lg text-white">Tomato Soup</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">48k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🌽 Corn & Bean Comfort</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Rich roasted tomato and herb soup simmered with beans, sweet corn, pico de gallo, and served with crusted homemade corn chips.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Rich tomato soup served with beans, sweet corn, pico de gallo, and crusted corn chips.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Warming & hearty soup bowl</span>
+              <span class="text-amber-400/80 font-medium">Comfort Food</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Chicken / Pulled Pork Sandwich</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">58k / 68k</span>
+          <!-- Sandwich -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥪</span>
+                  <h3 class="font-display font-bold text-lg text-white">Chicken / Pulled Pork Sandwich</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">58k / 68k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🍔 Brioche & Potatoes</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Crispy fried chicken with slaw & honey mustard OR tender slow-cooked pulled pork with BBQ sauce & fried egg on a toasted brioche bun with potatoes.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Fried chicken with slaw & honey mustard OR pulled pork with BBQ sauce & fried egg on brioche bun with potatoes.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Chicken 58k | Pulled Pork 68k</span>
+              <span class="text-amber-400/80 font-medium">Hearty Lunch</span>
+            </div>
           </div>
 
         </div>
@@ -850,65 +1229,148 @@
             </button>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-emerald-500/40">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Jackfruit Carnitas Tacos</h3>
-              <span class="font-display font-black text-emerald-400 text-base shrink-0">29k</span>
+          <!-- Jackfruit Carnitas Tacos -->
+          <div class="bistro-card p-6 rounded-3xl border-emerald-500/40 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'vegan' ? 'ring-2 ring-emerald-400/80 bg-emerald-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌱</span>
+                  <h3 class="font-display font-bold text-lg text-white">Jackfruit Carnitas Tacos</h3>
+                </div>
+                <span class="font-display font-black text-emerald-400 text-lg shrink-0">29k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-950 border border-emerald-400/40 text-emerald-300">🌱 100% Plant-Based #1</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-yellow-300 border border-yellow-700/40">🌾 Corn Tortilla GF</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Tender shredded young Balinese jackfruit braised with authentic Mexican spices, citrus, and fresh herbs, served with slaw, pico de gallo, and salsa.
+              </p>
             </div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-950 border border-emerald-400/40 text-emerald-300 mb-3">🌱 100% Plant-Based #1</span>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Tender shredded young Balinese jackfruit braised with Mexican spices, citrus, and herbs with slaw, pico de gallo, and salsa.
-            </p>
+            <div class="mt-4 pt-3 border-t border-emerald-500/30 flex items-center justify-between text-xs text-stone-400">
+              <span>Ubud's famous plant-based taco</span>
+              <span class="text-emerald-400/80 font-medium">Bestseller</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-emerald-500/40">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Sauteed Veggies & Guac Taco</h3>
-              <span class="font-display font-black text-emerald-400 text-base shrink-0">29k</span>
+          <!-- Sauteed Veggies & Guac Taco -->
+          <div class="bistro-card p-6 rounded-3xl border-emerald-500/40 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'vegan' ? 'ring-2 ring-emerald-400/80 bg-emerald-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥑</span>
+                  <h3 class="font-display font-bold text-lg text-white">Sauteed Veggies & Guac Taco</h3>
+                </div>
+                <span class="font-display font-black text-emerald-400 text-lg shrink-0">29k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 border border-emerald-500/40 text-emerald-300">🌱 Fresh Harvest</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Charred sweet peppers, onions, mushrooms, and rich guacamole served in a warm soft corn or flour tortilla.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Charred peppers, onions, mushrooms, and fresh guacamole in a warm soft corn or flour tortilla.
-            </p>
+            <div class="mt-4 pt-3 border-t border-emerald-500/30 flex items-center justify-between text-xs text-stone-400">
+              <span>Freshly charred seasonal veggies</span>
+              <span class="text-emerald-400/80 font-medium">Nutrient Rich</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-emerald-500/40">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Tempe Tacos</h3>
-              <span class="font-display font-black text-emerald-400 text-base shrink-0">27k</span>
+          <!-- Tempe Tacos -->
+          <div class="bistro-card p-6 rounded-3xl border-emerald-500/40 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'vegan' ? 'ring-2 ring-emerald-400/80 bg-emerald-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌮</span>
+                  <h3 class="font-display font-bold text-lg text-white">Tempe Tacos</h3>
+                </div>
+                <span class="font-display font-black text-emerald-400 text-lg shrink-0">27k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 border border-emerald-500/40 text-emerald-300">🌱 Local Protein</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Spiced Balinese artisan tempe seared with smoky Mexican seasonings, crisp slaw, pico de gallo, and plant-based crema.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Spiced Balinese artisan tempe seared with Mexican seasonings, pico de gallo, and jalapeño crema.
-            </p>
+            <div class="mt-4 pt-3 border-t border-emerald-500/30 flex items-center justify-between text-xs text-stone-400">
+              <span>Balinese artisan tempe fusion</span>
+              <span class="text-emerald-400/80 font-medium">High Protein</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-emerald-500/40">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Veggie Burger</h3>
-              <span class="font-display font-black text-emerald-400 text-base shrink-0">52k</span>
+          <!-- Veggie Burger -->
+          <div class="bistro-card p-6 rounded-3xl border-emerald-500/40 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'vegan' ? 'ring-2 ring-emerald-400/80 bg-emerald-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍔</span>
+                  <h3 class="font-display font-bold text-lg text-white">Veggie Burger</h3>
+                </div>
+                <span class="font-display font-black text-emerald-400 text-lg shrink-0">52k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 border border-emerald-500/40 text-emerald-300">🌱 Tempe Patty</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                House artisan tempe patty, cheese (or cashew cheese), onion, tomatoes, lettuce, spicy vegan mayo, brioche bun, and crusted baby potatoes.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Tempe patty, cheese, onion, tomatoes, lettuce, spicy mayo, brioche bun, and crusted baby potatoes.
-            </p>
+            <div class="mt-4 pt-3 border-t border-emerald-500/30 flex items-center justify-between text-xs text-stone-400">
+              <span>Includes crusted baby potatoes</span>
+              <span class="text-emerald-400/80 font-medium">Filling Meal</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-emerald-500/40">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Veggie Wrap</h3>
-              <span class="font-display font-black text-emerald-400 text-base shrink-0">54k</span>
+          <!-- Veggie Wrap -->
+          <div class="bistro-card p-6 rounded-3xl border-emerald-500/40 transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'vegan' ? 'ring-2 ring-emerald-400/80 bg-emerald-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🌯</span>
+                  <h3 class="font-display font-bold text-lg text-white">Veggie Wrap</h3>
+                </div>
+                <span class="font-display font-black text-emerald-400 text-lg shrink-0">54k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950 border border-emerald-500/40 text-emerald-300">🌱 10" Giant Tortilla</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Sautéed eggplant, oyster mushroom, onion, green peppers, carrot, salsa, and mozzarella (or cashew cheese) in a 10" tortilla with potatoes.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              Sautéed eggplant, oyster mushroom, onion, green peppers, carrot, salsa, mozzarella in 10" tortilla with potatoes.
-            </p>
+            <div class="mt-4 pt-3 border-t border-emerald-500/30 flex items-center justify-between text-xs text-stone-400">
+              <span>Mushroom & roasted eggplant</span>
+              <span class="text-emerald-400/80 font-medium">Chef Favorite</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl border-emerald-500/40">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Vegan Mains Customization</h3>
-              <span class="font-display font-black text-emerald-400 text-base shrink-0">Cashew Cheese</span>
+          <!-- Vegan Mains Customization -->
+          <div class="bistro-card p-6 rounded-3xl border-emerald-500/50 bg-emerald-950/40 transition-all duration-200 flex flex-col justify-between shadow-agave-glow">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🧀</span>
+                  <h3 class="font-display font-bold text-lg text-white">Vegan Customization</h3>
+                </div>
+                <span class="font-display font-black text-emerald-400 text-base shrink-0">Cashew Cheese</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-900 border border-emerald-400/50 text-emerald-200">⭐ Any Main Dish</span>
+              </div>
+              <p class="text-stone-200 text-sm leading-relaxed">
+                You can substitute dairy cheese for our housemade artisan Cashew Cheese on ANY Burrito, Quesadilla, Fajita, or Enchilada!
+              </p>
             </div>
-            <p class="text-stone-300 text-sm leading-relaxed">
-              You can substitute dairy cheese for our housemade artisan Cashew Cheese on ANY Burrito, Quesadilla, Fajita, or Enchilada!
-            </p>
+            <div class="mt-4 pt-3 border-t border-emerald-500/40 flex items-center justify-between text-xs text-emerald-300">
+              <span>100% dairy-free artisanal recipe</span>
+              <span class="font-bold">Free Substitution</span>
+            </div>
           </div>
 
         </div>
@@ -937,54 +1399,146 @@
             </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Signature Margaritas</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">88k</span>
+          <!-- Signature Margaritas -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'spicy' ? 'ring-2 ring-amber-400/80 bg-amber-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍹</span>
+                  <h3 class="font-display font-bold text-lg text-white">Signature Margaritas</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">88k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🍹 100% Agave Tequila</span>
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-stone-800 text-amber-300 border border-amber-700/40">5 Flavors</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Smokey Pineapple • Tamarind • Spicy Jalapeño • Strawberry • Blue Curacao (Tequila, triple sec, citrus sour mix).
+              </p>
             </div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 mb-2">🍹 Choose Your Flavor</span>
-            <p class="text-stone-300 text-sm">Smokey Pineapple • Tamarind • Spicy • Strawberry • Blue (Tequila, triple sec, sour mix)</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Shaken fresh or frozen</span>
+              <span class="text-amber-400/80 font-medium">Cantina Special</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Classic Margaritas / Mojito</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">86k / 78k</span>
+          <!-- Classic Margaritas / Mojito -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍸</span>
+                  <h3 class="font-display font-bold text-lg text-white">Classic Margaritas & Mojito</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">86k / 78k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🍋 Fresh Ubud Limes</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Classic 100% Agave Tequila Margarita on the rocks OR fresh garden mint Cuban Mojito with white rum and sparkling soda.
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Classic 100% Agave Margarita or fresh mint Mojito shaken with fresh Balinese limes.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Margarita 86k | Mojito 78k</span>
+              <span class="text-amber-400/80 font-medium">Timeless Classics</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Michelada</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">75k</span>
+          <!-- Michelada -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'spicy' ? 'ring-2 ring-red-400/80 bg-red-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍺</span>
+                  <h3 class="font-display font-bold text-lg text-white">Michelada</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">75k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-950/80 border border-red-500/50 text-red-300">🌶️ Tajín Chili Rim</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Cold Prost Lager poured over seasoned tomato juice, Mexican Tajín spice rim, fresh lime, Lea & Perrins, and Tabasco.
+              </p>
             </div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-950 border border-red-500/40 text-red-300 mb-2">🍺 Mexican Beer Cocktail</span>
-            <p class="text-stone-300 text-sm">Prost Lager, tomato juice, Tajín chili rim, fresh lime, Lea & Perrins, and Tabasco.</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Authentic Mexican beer cocktail</span>
+              <span class="text-red-400/80 font-medium">Spicy & Refreshing</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Cold Beers</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">From 34k</span>
+          <!-- Cold Beers -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🍻</span>
+                  <h3 class="font-display font-bold text-lg text-white">Ice Cold Cervezas</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">From 34k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">❄️ Sub-Zero Chilled</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Prost (34k/54k), Bintang (40k), Bali Hai (60k), Corona Extra (85k), San Miguel Light (45k), Alster Lemon Radler (34k).
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Prost (34k/54k), Bintang (40k), Bali Hai (60k), Corona (85k), San Miguel Light (45k), Alster Lemon (34k).</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Served ice-cold with lime wedge</span>
+              <span class="text-amber-400/80 font-medium">Full Selection</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Fresh Juices & Healthy</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">25k - 45k</span>
+          <!-- Fresh Juices -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between"
+               :class="dietaryFilter === 'vegan' ? 'ring-2 ring-emerald-400/80 bg-emerald-950/20' : ''">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥥</span>
+                  <h3 class="font-display font-bold text-lg text-white">Fresh Juices & Elixirs</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">25k - 45k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">🌱 Cold Pressed</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Whole Fresh Coconut (32k), Balinese Turmeric Jamu (25k), Artisan Kombucha (45k), Fresh Watermelon, Mango, Avocado Juice (35k-40k).
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Fresh Coconut (32k), Turmeric Jamu (25k), Kombucha (45k), Watermelon, Mango, Avocado Juice (35k-40k).</p>
+            <div class="mt-4 pt-3 border-t border-emerald-500/30 flex items-center justify-between text-xs text-stone-400">
+              <span>100% natural, zero added sugar</span>
+              <span class="text-emerald-400/80 font-medium">Ubud Wellness</span>
+            </div>
           </div>
 
-          <div class="luxury-card p-6 rounded-3xl">
-            <div class="flex items-start justify-between gap-4 mb-2">
-              <h3 class="font-display font-bold text-lg text-white">Churros & Desserts</h3>
-              <span class="font-display font-black text-hacienda-gold text-base shrink-0">35k - 42k</span>
+          <!-- Churros & Desserts -->
+          <div class="bistro-card p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🥖</span>
+                  <h3 class="font-display font-bold text-lg text-white">Churros & Sweet Treats</h3>
+                </div>
+                <span class="font-display font-black text-amber-400 text-lg shrink-0">35k - 42k</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">🍫 Warm Chocolate Dip</span>
+              </div>
+              <p class="text-stone-300 text-sm leading-relaxed">
+                Crispy cinnamon-sugar Churros (42k), Coconut Kelapertart (38k), Caramelized Banana (35k), Artisan Ice Cream scoops (28k).
+              </p>
             </div>
-            <p class="text-stone-300 text-sm">Crispy cinnamon sugar Churros (42k), Kelapertart (38k), Caramelized Banana (35k), Ice Cream (28k).</p>
+            <div class="mt-4 pt-3 border-t border-hacienda-borderGold flex items-center justify-between text-xs text-stone-400">
+              <span>Made hot & fresh to order</span>
+              <span class="text-amber-400/80 font-medium">Sweet Finish</span>
+            </div>
           </div>
 
         </div>

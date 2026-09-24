@@ -67,9 +67,17 @@ test('Cilantro Ubud - HTML Structure, Assets & Conversion Integrity', async (t) 
   await t.test('includes Alpine.js state hooks and modal components', () => {
     assert.ok(html.includes('mobileMenuOpen'), 'Alpine mobile menu state must exist');
     assert.ok(html.includes('activeCategory'), 'Alpine interactive menu tab state must exist');
+    assert.ok(html.includes('dietaryFilter'), 'Alpine dietary filter state must exist');
     assert.ok(html.includes('modalOpen'), 'Alpine reservation modal state must exist');
     assert.ok(html.includes('menuModalOpen'), 'Alpine menu lightbox modal state must exist');
     assert.ok(html.includes('x-cloak'), 'x-cloak must be used for layout stabilization');
+  });
+
+  await t.test('includes Bali-Mexican Tropical Oasis design tokens & Bistro Board cards', () => {
+    assert.ok(html.includes('bistro-card'), 'Bistro card class must be present');
+    assert.ok(html.includes('wood-board-pattern'), 'Wood board pattern must be present');
+    assert.ok(html.includes('tropical-glow'), 'Tropical glow ambient accents must be present');
+    assert.ok(html.includes('setDietaryFilter'), 'setDietaryFilter handler must exist');
   });
 
   await t.test('includes all 6 official menu page scans and image references', () => {

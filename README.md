@@ -2,7 +2,7 @@
 
 > Conversion-optimized, zero-build restaurant website for **Cilantro Ubud**, located on Jln. Raya Nyuh Kuning in the cultural heart of Ubud, Bali.
 
-[![Test Suite](https://img.shields.io/badge/Tests-10%2F10%20Passing-emerald)](tests/landing.spec.js)
+[![Test Suite](https://img.shields.io/badge/Tests-11%2F11%20Passing-emerald)](tests/landing.spec.js)
 [![Rating](https://img.shields.io/badge/Google%20Reviews-4.8%20%E2%98%85%20(500%2B)-amber)](https://www.google.com/maps/place/Cilantro+Ubud/@-8.5275181,115.2601778,17z/data=!4m8!3m7!1s0x2dd23d9f8887ba51:0xe115c8808d6cf3e3!8m2!3d-8.5275181!4d115.2601778!9m1!1b1!16s%2Fg%2F11fzfdrz9d)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -10,7 +10,9 @@
 
 ## 🌟 Overview & Features
 
-- **Branded Experience**: Featuring Cilantro Ubud's iconic sombrero logo, warm Mexican Hacienda & Agave Cantina aesthetics.
+- **Bali-Mexican Tropical Oasis Aesthetic**: Custom palette blending Ubud jungle emeralds (`#064E3B`, `#10B981`), warm terracotta adobe (`#D94826`), sunlit golden glows (`#F59E0B`), and charred wood bistro board textures.
+- **Interactive Dietary Filter Chips**: Real-time filtering by `All Dishes`, `🌱 100% Plant-Based`, `🍳 Breakfast (8-11:30 AM)`, `🌶️ Spicy Favorites`, and `🌾 Gluten-Free Friendly`.
+- **Bistro Board Menu Cards**: Illustrated Mexican dish emblems, golden IDR pricing, and clear customization notes (GF cassava tortilla swap, artisanal cashew cheese).
 - **Interactive Menu Explorer**: Tabbed navigation across 5 culinary categories from the official menu PDF:
   - 🍳 *Breakfast & Brunch* (Huevos Rancheros, Breakfast Burrito, Mexican Omelette, Avocado Toast, Pancakes & Waffles)
   - 🌮 *Tacos & Mexican Mains* (LA Taco, Crispy/Soft Tacos, Wet Burrito, Sizzling Fajitas, Enchiladas, Chimichanga)
