@@ -87,5 +87,33 @@ test('Cilantro Ubud - HTML Structure, Assets & Conversion Integrity', async (t) 
       assert.ok(html.includes(`assets/images/menu/menu-page-${i}.jpg`), `menu-page-${i}.jpg must be referenced in HTML`);
     }
   });
+
+  await t.test('includes Brulee-inspired components: dedicated reservation section and delivery hotline', () => {
+    assert.ok(html.includes('<section id="reservation"'), 'Dedicated table reservation section must exist');
+    assert.ok(html.includes('(0361) 9083390'), 'Delivery phone hotline must be present');
+    assert.ok(html.includes('getWhatsAppLink()'), 'Dynamic WhatsApp reservation builder must exist');
+  });
+
+  await t.test('includes TripAdvisor authentic photos and gallery section', () => {
+    assert.ok(html.includes('<section id="gallery"'), 'Gallery section must exist');
+    assert.ok(html.includes('assets/images/tripadvisor/cilantro-fajitas-spread.jpg'), 'TripAdvisor fajitas photo must be referenced');
+    assert.ok(html.includes('tripadvisor.co.id/Restaurant_Review-g297701-d13496826'), 'TripAdvisor restaurant link must exist');
+    
+    const tripadvisorPhotos = [
+      'cilantro-cantina-vibe.jpg',
+      'cilantro-tacos-platter.jpg',
+      'cilantro-mexican-dishes.jpg',
+      'nachos-melted-cheese.jpg',
+      'cilantro-cocktails-bar.jpg',
+      'cilantro-fresh-guacamole.jpg',
+      'love-cilantro-sign.jpg',
+      'cilantro-breakfast-plate.jpg',
+    ];
+    for (const photo of tripadvisorPhotos) {
+      const p = path.resolve(__dirname, `../assets/images/tripadvisor/${photo}`);
+      assert.ok(fs.existsSync(p), `${photo} must exist in assets/images/tripadvisor/`);
+    }
+  });
 });
+
 
