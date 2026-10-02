@@ -175,6 +175,16 @@
           'Churros, Sweets & Tropical Juices',
           'Signature Margaritas & Agave Cantina'
         ],
+        galleryModalOpen: false,
+        activeGalleryImg: '',
+        activeGalleryTitle: '',
+        activeGalleryDesc: '',
+        openGalleryModal(img, title, desc) {
+          this.activeGalleryImg = img;
+          this.activeGalleryTitle = title;
+          this.activeGalleryDesc = desc || '';
+          this.galleryModalOpen = true;
+        },
         openMenuViewer(pageNum) {
           this.activeMenuPage = pageNum;
           this.activeMenuImg = `assets/images/menu/menu-page-${pageNum}.jpg`;
@@ -288,14 +298,14 @@
         </a>
 
         <!-- Desktop Navigation (Clean, Spacious, Elegant) -->
-        <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-xs xl:text-sm font-semibold tracking-wider uppercase text-stone-300">
+        <nav class="hidden lg:flex items-center gap-5 xl:gap-7 text-xs xl:text-sm font-semibold tracking-wider uppercase text-stone-300">
           <a href="#menu" @click="if (activeCategory === 'breakfast' || activeCategory === 'menu_scans') activeCategory = 'tacos_mains'" class="hover:text-hacienda-gold transition-colors py-1">Menu</a>
           <a href="#menu" @click.prevent="scrollToCategory('breakfast')" class="hover:text-amber-300 transition-colors py-1 cursor-pointer">Breakfast</a>
           <a href="#about" class="hover:text-hacienda-gold transition-colors py-1">Our Story</a>
           <a href="#gallery" class="hover:text-amber-300 transition-colors py-1">Gallery</a>
           <a href="#vegan" @click="activeCategory = 'vegan'" class="hover:text-emerald-400 transition-colors py-1">Plant-Based</a>
           <a href="#reservation" class="hover:text-amber-300 transition-colors py-1">Reservation</a>
-          <a href="#reviews" class="hover:text-hacienda-gold transition-colors py-1">Reviews</a>
+          <a href="#faq" class="hover:text-amber-300 transition-colors py-1">FAQ</a>
           <a href="#location" class="hover:text-hacienda-gold transition-colors py-1">Location</a>
         </nav>
 
@@ -339,6 +349,7 @@
       <a @click="mobileMenuOpen = false; scrollToCategory('vegan')" href="#vegan" class="block px-3 py-2 font-display text-sm font-bold tracking-wide uppercase text-emerald-400 hover:text-emerald-300 border-b border-stone-800">🌱 Plant-Based Vegan Specials</a>
       <a @click="mobileMenuOpen = false" href="#reservation" class="block px-3 py-2 font-display text-sm font-bold tracking-wide uppercase text-amber-300 hover:text-amber-200 border-b border-stone-800">📅 Table Reservation</a>
       <a @click="mobileMenuOpen = false" href="#reviews" class="block px-3 py-2 font-display text-sm font-bold tracking-wide uppercase text-stone-100 hover:text-hacienda-gold border-b border-stone-800">⭐ 4.8★ Google Reviews</a>
+      <a @click="mobileMenuOpen = false" href="#faq" class="block px-3 py-2 font-display text-sm font-bold tracking-wide uppercase text-amber-300 hover:text-amber-200 border-b border-stone-800">❓ FAQ (Questions & Delivery)</a>
       <a @click="mobileMenuOpen = false" href="#location" class="block px-3 py-2 font-display text-sm font-bold tracking-wide uppercase text-stone-100 hover:text-hacienda-gold border-b border-stone-800">📍 Location & Hours</a>
       
       <div class="pt-2">
@@ -358,12 +369,15 @@
     <section class="relative overflow-hidden bg-hacienda-obsidian py-16 sm:py-24 lg:py-28 border-b border-hacienda-borderGold">
       
       <!-- Atmospheric Restaurant Background Image with Dark Luxury Overlay -->
-      <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 z-0 overflow-hidden">
         <img src="assets/images/tripadvisor/cilantro-cantina-vibe.jpg" 
-             alt="Cilantro Ubud Mexican Atmosphere" 
-             class="w-full h-full object-cover object-center filter brightness-[0.25] contrast-125 scale-105 pointer-events-none">
-        <div class="absolute inset-0 bg-gradient-to-r from-hacienda-obsidian via-hacienda-obsidian/95 to-hacienda-obsidian/80"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-hacienda-obsidian via-transparent to-hacienda-obsidian"></div>
+             alt="Cilantro Ubud Mexican Atmosphere & Dining Ambiance" 
+             class="w-full h-full object-cover object-center filter brightness-[0.42] contrast-115 saturate-125 scale-105 pointer-events-none transition-transform duration-1000">
+        <!-- Semi-transparent Cantina Gradient Overlays for High Legibility & Warm Ambiance -->
+        <div class="absolute inset-0 bg-gradient-to-r from-hacienda-obsidian/92 via-hacienda-obsidian/80 to-hacienda-obsidian/65"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-hacienda-obsidian via-black/20 to-hacienda-obsidian/70"></div>
+        <!-- Warm Mexican Amber Tint Overlay -->
+        <div class="absolute inset-0 bg-amber-950/20 mix-blend-color-dodge pointer-events-none"></div>
       </div>
 
       <!-- Ambient Cantina Glows & Tropical Accents -->
@@ -498,9 +512,8 @@
 
             </div>
 
-          </div>
-
         </div>
+
       </div>
     </section>
 
@@ -1857,6 +1870,38 @@
       </div>
     </section>
 
+    <!-- Sunset & Happy Hour Cantina Spotlight Banner (Brulee Style) -->
+    <section class="py-10 bg-gradient-to-r from-amber-950/80 via-hacienda-woodDark to-amber-950/80 text-white relative border-y border-amber-500/40 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6 p-6 sm:p-8 rounded-3xl bg-black/40 border border-amber-500/30 backdrop-blur-md shadow-2xl">
+          
+          <div class="flex items-center gap-5 text-center lg:text-left flex-col sm:flex-row">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-400/50 text-amber-300 flex items-center justify-center text-3xl shrink-0 shadow-gold-glow">
+              🍹
+            </div>
+            <div>
+              <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-black uppercase tracking-wider">Happy Hour • 4:30 PM – 7:00 PM</span>
+                <span class="text-xs text-amber-300 font-bold hidden sm:inline">Daily Sunset Tapas</span>
+              </div>
+              <h3 class="font-display font-black text-xl sm:text-2xl text-white">Sunset Agave Margaritas & Mexican Tapas Hour</h3>
+              <p class="text-stone-300 text-xs sm:text-sm mt-0.5">Unwind under the tropical breeze in Nyuh Kuning with signature handcrafted agave cocktails, crispy nachos & fresh guacamole.</p>
+            </div>
+          </div>
+
+          <div class="shrink-0 flex items-center gap-3 w-full sm:w-auto justify-center">
+            <a href="https://wa.me/6281246516418?text=Halo%20Cilantro%20Ubud%2C%20I%20would%20like%20to%20reserve%20for%20Sunset%20Happy%20Hour" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="default-btn w-full sm:w-auto text-center">
+              <span>Reserve Sunset Table</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Special Chef's Offer / Cantina Spotlight Banner (Brulee Style) -->
     <section class="py-16 sm:py-20 bg-gradient-to-r from-hacienda-woodDark via-stone-900 to-hacienda-warmDark text-white relative border-y border-hacienda-borderGold overflow-hidden">
       <div class="absolute inset-0 z-0 opacity-25 bg-cover bg-center" style="background-image: url('assets/images/tripadvisor/nachos-melted-cheese.jpg');"></div>
@@ -2277,72 +2322,114 @@
           </p>
         </div>
 
-        <!-- 6-Photo Masonry / Symmetrical Gallery Grid -->
+        <!-- 6-Photo Masonry / Symmetrical Gallery Grid (Click to open Lightbox) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           
           <!-- Photo 1 -->
-          <div class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900">
+          <div @click="openGalleryModal('assets/images/tripadvisor/cilantro-fajitas-spread.jpg', 'Sizzling Fajitas & Tacos Feast', 'Sizzling iron skillet fajitas served with warm stone-ground corn tortillas, housemade guacamole, pico de gallo, and roasted tomato salsa.')"
+               class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900 cursor-pointer">
             <img src="assets/images/tripadvisor/cilantro-fajitas-spread.jpg" 
                  alt="Cilantro Ubud Sizzling Fajitas & Tacos Feast" 
                  class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-end p-5">
-              <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">House Specialty</span>
-              <h4 class="font-display font-bold text-white text-base">Sizzling Fajitas Feast</h4>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-between p-5">
+              <div class="flex justify-end">
+                <span class="w-9 h-9 rounded-full bg-hacienda-obsidian/80 backdrop-blur-md border border-hacienda-gold/60 text-hacienda-gold flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition shadow-md">🔍</span>
+              </div>
+              <div>
+                <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">House Specialty</span>
+                <h4 class="font-display font-bold text-white text-base">Sizzling Fajitas Feast</h4>
+                <p class="text-stone-300 text-xs mt-0.5 line-clamp-1">Click to view snapshot & details</p>
+              </div>
             </div>
           </div>
 
           <!-- Photo 2 -->
-          <div class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900">
+          <div @click="openGalleryModal('assets/images/tripadvisor/nachos-melted-cheese.jpg', 'Loaded Melted Cheese Nachos', 'Crispy hand-cut corn tortilla chips baked with melted Oaxaca cheese, spiced refried beans, pickled jalapeños, guacamole, and cool sour cream.')"
+               class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900 cursor-pointer">
             <img src="assets/images/tripadvisor/nachos-melted-cheese.jpg" 
                  alt="Cilantro Ubud Loaded Melted Cheese Nachos" 
                  class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-end p-5">
-              <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Crowd Favorite</span>
-              <h4 class="font-display font-bold text-white text-base">Loaded Melted Cheese Nachos</h4>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-between p-5">
+              <div class="flex justify-end">
+                <span class="w-9 h-9 rounded-full bg-hacienda-obsidian/80 backdrop-blur-md border border-hacienda-gold/60 text-hacienda-gold flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition shadow-md">🔍</span>
+              </div>
+              <div>
+                <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Crowd Favorite</span>
+                <h4 class="font-display font-bold text-white text-base">Loaded Melted Cheese Nachos</h4>
+                <p class="text-stone-300 text-xs mt-0.5 line-clamp-1">Click to view snapshot & details</p>
+              </div>
             </div>
           </div>
 
           <!-- Photo 3 -->
-          <div class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900">
+          <div @click="openGalleryModal('assets/images/tripadvisor/cilantro-cocktails-bar.jpg', 'Handcrafted Agave Margaritas & Bar', '100% Blue Agave Tequila & Mezcal cocktails featuring Smokey Pineapple, Tamarind, Hibiscus, Classic Lime, and craft cervezas.')"
+               class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900 cursor-pointer">
             <img src="assets/images/tripadvisor/cilantro-cocktails-bar.jpg" 
                  alt="Cilantro Ubud Handcrafted Margaritas & Bar" 
                  class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-end p-5">
-              <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Agave Bar</span>
-              <h4 class="font-display font-bold text-white text-base">Handcrafted Agave Cocktails</h4>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-between p-5">
+              <div class="flex justify-end">
+                <span class="w-9 h-9 rounded-full bg-hacienda-obsidian/80 backdrop-blur-md border border-hacienda-gold/60 text-hacienda-gold flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition shadow-md">🔍</span>
+              </div>
+              <div>
+                <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Agave Bar</span>
+                <h4 class="font-display font-bold text-white text-base">Handcrafted Agave Cocktails</h4>
+                <p class="text-stone-300 text-xs mt-0.5 line-clamp-1">Click to view snapshot & details</p>
+              </div>
             </div>
           </div>
 
           <!-- Photo 4 -->
-          <div class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900">
+          <div @click="openGalleryModal('assets/images/tripadvisor/cilantro-fresh-guacamole.jpg', 'Fresh Avocado Guacamole', 'Made fresh upon order using ripe Bali highland avocados, chopped cilantro, lime, and diced tomatoes, served with crisp corn totopos.')"
+               class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900 cursor-pointer">
             <img src="assets/images/tripadvisor/cilantro-fresh-guacamole.jpg" 
                  alt="Cilantro Ubud Fresh Homemade Guacamole & Tortilla Chips" 
                  class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-end p-5">
-              <span class="text-emerald-400 text-[11px] font-bold uppercase tracking-wider">Plant-Based Fresh</span>
-              <h4 class="font-display font-bold text-white text-base">Fresh Avocado Guacamole</h4>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-between p-5">
+              <div class="flex justify-end">
+                <span class="w-9 h-9 rounded-full bg-hacienda-obsidian/80 backdrop-blur-md border border-emerald-500/60 text-emerald-400 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition shadow-md">🔍</span>
+              </div>
+              <div>
+                <span class="text-emerald-400 text-[11px] font-bold uppercase tracking-wider">Plant-Based Fresh</span>
+                <h4 class="font-display font-bold text-white text-base">Fresh Avocado Guacamole</h4>
+                <p class="text-stone-300 text-xs mt-0.5 line-clamp-1">Click to view snapshot & details</p>
+              </div>
             </div>
           </div>
 
           <!-- Photo 5 -->
-          <div class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900">
+          <div @click="openGalleryModal('assets/images/tripadvisor/love-cilantro-sign.jpg', 'Nyuh Kuning Cantina Ambiance', 'Relaxed open-air Bali cantina vibe with vibrant Mexican wall art, cozy lighting, and lush tropical greenery in Nyuh Kuning, Ubud.')"
+               class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900 cursor-pointer">
             <img src="assets/images/tripadvisor/love-cilantro-sign.jpg" 
                  alt="Cilantro Ubud Mexican Cantina Ambiance" 
                  class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-end p-5">
-              <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Cantina Vibe</span>
-              <h4 class="font-display font-bold text-white text-base">Nyuh Kuning Dining Ambiance</h4>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-between p-5">
+              <div class="flex justify-end">
+                <span class="w-9 h-9 rounded-full bg-hacienda-obsidian/80 backdrop-blur-md border border-hacienda-gold/60 text-hacienda-gold flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition shadow-md">🔍</span>
+              </div>
+              <div>
+                <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Cantina Vibe</span>
+                <h4 class="font-display font-bold text-white text-base">Nyuh Kuning Dining Ambiance</h4>
+                <p class="text-stone-300 text-xs mt-0.5 line-clamp-1">Click to view snapshot & details</p>
+              </div>
             </div>
           </div>
 
           <!-- Photo 6 -->
-          <div class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900">
+          <div @click="openGalleryModal('assets/images/tripadvisor/cilantro-breakfast-plate.jpg', 'Morning Breakfast & Brunch (8 AM)', 'Huevos Rancheros with warm salsa, sunny-side eggs, breakfast burritos, banana pancakes, and freshly brewed Balinese roast coffee.')"
+               class="group relative rounded-3xl overflow-hidden border-2 border-hacienda-borderGold hover:border-hacienda-gold transition-all duration-300 shadow-xl aspect-[4/3] bg-stone-900 cursor-pointer">
             <img src="assets/images/tripadvisor/cilantro-breakfast-plate.jpg" 
                  alt="Cilantro Ubud Daily Breakfast 8 AM Huevos Rancheros" 
                  class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-end p-5">
-              <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Open 8:00 AM</span>
-              <h4 class="font-display font-bold text-white text-base">Morning Breakfast & Brunch</h4>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition flex flex-col justify-between p-5">
+              <div class="flex justify-end">
+                <span class="w-9 h-9 rounded-full bg-hacienda-obsidian/80 backdrop-blur-md border border-amber-500/60 text-amber-300 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition shadow-md">🔍</span>
+              </div>
+              <div>
+                <span class="text-amber-300 text-[11px] font-bold uppercase tracking-wider">Open 8:00 AM</span>
+                <h4 class="font-display font-bold text-white text-base">Morning Breakfast & Brunch</h4>
+                <p class="text-stone-300 text-xs mt-0.5 line-clamp-1">Click to view snapshot & details</p>
+              </div>
             </div>
           </div>
 
@@ -2517,6 +2604,148 @@
               <span>Read 500+ Google Reviews</span>
             </a>
           </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Frequently Asked Questions (Brulee FAQ Accordion Style) -->
+    <section id="faq" class="py-20 bg-hacienda-obsidian border-t border-hacienda-borderGold relative">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-14 space-y-2">
+          <h6 class="sub-title">Got Questions?</h6>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white tracking-tight">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-stone-300 text-sm sm:text-base">
+            Everything you need to know about dining, breakfast hours, dietary options, and villa delivery at Cilantro Ubud.
+          </p>
+        </div>
+
+        <!-- Accordion List -->
+        <div class="space-y-4">
+          
+          <!-- FAQ 1: Breakfast -->
+          <div class="rounded-2xl luxury-card border border-hacienda-borderGold overflow-hidden transition-all duration-200">
+            <button @click="activeFaq = activeFaq === 1 ? null : 1" 
+                    type="button" 
+                    class="w-full p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-white hover:text-hacienda-gold transition">
+              <span class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-sm shrink-0">🍳</span>
+                <span>Are you open for breakfast and what time do you serve?</span>
+              </span>
+              <span class="w-7 h-7 rounded-full bg-stone-800 flex items-center justify-center text-xs text-hacienda-gold shrink-0 transition-transform duration-200"
+                    :class="activeFaq === 1 ? 'rotate-180 bg-hacienda-gold text-black' : ''">
+                ▼
+              </span>
+            </button>
+            <div x-show="activeFaq === 1" 
+                 x-cloak 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="px-6 pb-6 pt-1 text-stone-300 text-sm leading-relaxed border-t border-hacienda-gold/10">
+              Yes! We open early every single day at <strong class="text-amber-300 font-bold">8:00 AM</strong>. Our breakfast menu runs from 8:00 AM to 11:30 AM featuring Huevos Rancheros, Breakfast Burritos, Fluffy Banana Pancakes, Smoothie Bowls, and freshly brewed Balinese roast coffee.
+            </div>
+          </div>
+
+          <!-- FAQ 2: Plant-Based & GF -->
+          <div class="rounded-2xl luxury-card border border-hacienda-borderGold overflow-hidden transition-all duration-200">
+            <button @click="activeFaq = activeFaq === 2 ? null : 2" 
+                    type="button" 
+                    class="w-full p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-white hover:text-emerald-400 transition">
+              <span class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-sm shrink-0">🌱</span>
+                <span>Do you have Vegan and Gluten-Free friendly options?</span>
+              </span>
+              <span class="w-7 h-7 rounded-full bg-stone-800 flex items-center justify-center text-xs text-hacienda-gold shrink-0 transition-transform duration-200"
+                    :class="activeFaq === 2 ? 'rotate-180 bg-emerald-500 text-black' : ''">
+                ▼
+              </span>
+            </button>
+            <div x-show="activeFaq === 2" 
+                 x-cloak 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="px-6 pb-6 pt-1 text-stone-300 text-sm leading-relaxed border-t border-emerald-500/10">
+              Absolutely. We are widely recognized in Ubud for our dedicated plant-based offerings. We make our own artisan cashew nut cheese, braised young jackfruit carnitas, and 100% stone-ground corn & cassava gluten-free tortillas daily.
+            </div>
+          </div>
+
+          <!-- FAQ 3: Delivery -->
+          <div class="rounded-2xl luxury-card border border-hacienda-borderGold overflow-hidden transition-all duration-200">
+            <button @click="activeFaq = activeFaq === 3 ? null : 3" 
+                    type="button" 
+                    class="w-full p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-white hover:text-amber-300 transition">
+              <span class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-sm shrink-0">🛵</span>
+                <span>Can I order delivery directly to my villa or hotel in Ubud?</span>
+              </span>
+              <span class="w-7 h-7 rounded-full bg-stone-800 flex items-center justify-center text-xs text-hacienda-gold shrink-0 transition-transform duration-200"
+                    :class="activeFaq === 3 ? 'rotate-180 bg-amber-500 text-black' : ''">
+                ▼
+              </span>
+            </button>
+            <div x-show="activeFaq === 3" 
+                 x-cloak 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="px-6 pb-6 pt-1 text-stone-300 text-sm leading-relaxed border-t border-amber-500/10">
+              Yes! You can order directly by calling our delivery desk at <strong class="text-white">(0361) 9083390</strong> or messaging our WhatsApp concierge at <strong class="text-emerald-400">+62 812-4651-6418</strong>. We carefully pack all food hot in eco-friendly packaging for fast delivery across Ubud and Nyuh Kuning.
+            </div>
+          </div>
+
+          <!-- FAQ 4: Location & Parking -->
+          <div class="rounded-2xl luxury-card border border-hacienda-borderGold overflow-hidden transition-all duration-200">
+            <button @click="activeFaq = activeFaq === 4 ? null : 4" 
+                    type="button" 
+                    class="w-full p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-white hover:text-hacienda-gold transition">
+              <span class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-hacienda-gold/20 text-hacienda-gold flex items-center justify-center text-sm shrink-0">📍</span>
+                <span>Where are you located and is parking available?</span>
+              </span>
+              <span class="w-7 h-7 rounded-full bg-stone-800 flex items-center justify-center text-xs text-hacienda-gold shrink-0 transition-transform duration-200"
+                    :class="activeFaq === 4 ? 'rotate-180 bg-hacienda-gold text-black' : ''">
+                ▼
+              </span>
+            </button>
+            <div x-show="activeFaq === 4" 
+                 x-cloak 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="px-6 pb-6 pt-1 text-stone-300 text-sm leading-relaxed border-t border-hacienda-gold/10">
+              We are located on <strong class="text-white">Jln. Raya Nyuh Kuning</strong> in Ubud, Bali — just a few minutes south of the Sacred Monkey Forest Sanctuary and Hanoman Street. Free scooter, motorcycle, and bicycle parking is available directly in front of the restaurant.
+            </div>
+          </div>
+
+          <!-- FAQ 5: Payment & Reservation -->
+          <div class="rounded-2xl luxury-card border border-hacienda-borderGold overflow-hidden transition-all duration-200">
+            <button @click="activeFaq = activeFaq === 5 ? null : 5" 
+                    type="button" 
+                    class="w-full p-6 text-left flex items-center justify-between gap-4 font-display font-bold text-base sm:text-lg text-white hover:text-hacienda-gold transition">
+              <span class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-hacienda-terracotta/20 text-hacienda-terracotta flex items-center justify-center text-sm shrink-0">💳</span>
+                <span>What payment methods do you accept and how do I book a table?</span>
+              </span>
+              <span class="w-7 h-7 rounded-full bg-stone-800 flex items-center justify-center text-xs text-hacienda-gold shrink-0 transition-transform duration-200"
+                    :class="activeFaq === 5 ? 'rotate-180 bg-hacienda-gold text-black' : ''">
+                ▼
+              </span>
+            </button>
+            <div x-show="activeFaq === 5" 
+                 x-cloak 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="px-6 pb-6 pt-1 text-stone-300 text-sm leading-relaxed border-t border-hacienda-gold/10">
+              We accept Cash (IDR), Indonesian QRIS payments, and International Credit/Debit Cards (Visa & Mastercard). You can instantly reserve your table using our online form or WhatsApp concierge button with immediate confirmation.
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -2936,6 +3165,82 @@
              class="px-5 py-2 rounded-xl bg-gradient-to-r from-hacienda-terracotta to-hacienda-habanero text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-amber-300/40 hover:brightness-110 shadow">
             <span>Order via WhatsApp (+6281246516418)</span>
           </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Gallery Lightbox Modal (Brulee Style) -->
+  <div x-show="galleryModalOpen" 
+       x-cloak
+       @keydown.escape.window="galleryModalOpen = false"
+       class="fixed inset-0 z-50 overflow-y-auto" 
+       role="dialog" 
+       aria-modal="true">
+    
+    <!-- Dark Backdrop -->
+    <div x-show="galleryModalOpen"
+         x-transition:enter="ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @click="galleryModalOpen = false"
+         class="fixed inset-0 bg-black/90 backdrop-blur-lg transition-opacity"></div>
+
+    <div class="flex min-h-full items-center justify-center p-3 sm:p-6 text-center">
+      
+      <div x-show="galleryModalOpen"
+           x-transition:enter="ease-out duration-300"
+           x-transition:enter-start="opacity-0 scale-95"
+           x-transition:enter-end="opacity-100 scale-100"
+           x-transition:leave="ease-in duration-200"
+           x-transition:leave-start="opacity-100 scale-100"
+           x-transition:leave-end="opacity-0 scale-95"
+           class="relative transform overflow-hidden rounded-3xl bg-hacienda-obsidian p-4 sm:p-6 text-left shadow-2xl transition-all w-full max-w-4xl border border-hacienda-borderGold text-stone-100 flex flex-col items-center">
+        
+        <!-- Top Bar -->
+        <div class="w-full flex items-center justify-between pb-3 mb-3 border-b border-hacienda-gold/30">
+          <div class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-sm">📸</span>
+            <div>
+              <h3 class="font-display font-black text-base sm:text-xl text-white leading-tight" x-text="activeGalleryTitle"></h3>
+              <p class="text-[11px] text-stone-400">Cilantro Ubud • Verified TripAdvisor Snapshot</p>
+            </div>
+          </div>
+          
+          <button @click="galleryModalOpen = false" 
+                  type="button" 
+                  class="p-2 rounded-xl bg-stone-800 hover:bg-red-600 text-stone-300 hover:text-white transition"
+                  title="Close (ESC)">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+          </button>
+        </div>
+
+        <!-- High-Res Photo Display -->
+        <div class="relative w-full max-h-[65vh] flex items-center justify-center overflow-hidden rounded-2xl border border-hacienda-gold/30 bg-black/80 shadow-2xl">
+          <img :src="activeGalleryImg" 
+               :alt="activeGalleryTitle" 
+               class="max-h-[65vh] w-full object-contain rounded-2xl select-none">
+        </div>
+
+        <!-- Description & Action Bar -->
+        <div class="mt-4 w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <p class="text-stone-300 text-xs sm:text-sm max-w-lg leading-relaxed" x-text="activeGalleryDesc"></p>
+          
+          <div class="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
+            <a :href="'https://wa.me/6281246516418?text=' + encodeURIComponent('Halo Cilantro Ubud! I saw ' + activeGalleryTitle + ' on your website and would like to order / ask about it.')"
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="default-btn w-full sm:w-auto text-center flex items-center justify-center gap-2">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+              <span>Order via WhatsApp</span>
+            </a>
+          </div>
         </div>
 
       </div>

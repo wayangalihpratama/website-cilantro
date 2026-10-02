@@ -114,6 +114,14 @@ test('Cilantro Ubud - HTML Structure, Assets & Conversion Integrity', async (t) 
       assert.ok(fs.existsSync(p), `${photo} must exist in assets/images/tripadvisor/`);
     }
   });
+
+  await t.test('includes Interactive FAQ Accordion, Sunset Happy Hour Banner & Gallery Lightbox', () => {
+    assert.ok(html.includes('<section id="faq"'), 'FAQ section must exist');
+    assert.ok(html.includes('activeFaq'), 'Alpine activeFaq state must exist');
+    assert.ok(html.includes('Sunset Agave Margaritas & Mexican Tapas Hour'), 'Sunset Happy Hour banner must exist');
+    assert.ok(html.includes('galleryModalOpen'), 'Alpine gallery lightbox state must exist');
+    assert.ok(html.includes('openGalleryModal'), 'openGalleryModal handler must exist');
+  });
 });
 
 
